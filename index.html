@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Preceieve — Bridging Silence with Sensation</title>
+  <meta name="description" content="Preceieve: converts sound and voice into meaningful vibrations & visuals for the deaf and hard-of-hearing." />
+  <link rel="stylesheet" href="index.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+         crossorigin=""/>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">🔊➜🔅</div>
+        <div class="brand-name">Preceieve</div>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-controls">
+        <!-- Theme toggle (visual). JS can persist if required later. -->
+        <label class="theme-toggle" title="Toggle dark / light">
+          <input type="checkbox" id="theme-toggle" aria-label="Toggle dark or light theme" />
+          <span class="thumb" aria-hidden="true">
+            <span class="sun">☀</span>
+            <span class="moon">🌙</span>
+          </span>
+        </label>
+
+        <label class="hamburger" for="mobile-nav-toggle" aria-hidden="true">
+          <input id="mobile-nav-toggle" type="checkbox" aria-hidden="true" />
+          <span class="burger" aria-hidden="true"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="mobile-nav-panel" role="navigation" aria-label="Mobile navigation">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <h1 class="hero-title">Bridging Silence with Sensation.</h1>
+          <p class="hero-sub">Converts voice, alarms and environmental sounds into vibrations, clear visuals and captions — fast, tactile, and visual-first.</p>
+
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#demo">Try the Demo</a>
+            <a class="btn btn-outline" href="#get">Request Access</a>
+          </div>
+
+          <ul class="hero-features" aria-hidden="true">
+            <li>Speech → Text</li>
+            <li>Distinct Vibration Patterns</li>
+            <li>Animated Signs</li>
+            <li>Emergency Detection</li>
+          </ul>
+        </div>
+
+        <aside class="hero-right" aria-hidden="true">
+          <div class="hero-illustration" role="img" aria-label="Illustration showing waves turning into vibration pulses">
+            <svg viewBox="0 0 200 140" preserveAspectRatio="xMidYMid meet" class="illustration-svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1">
+                  <stop offset="0%" stop-color="#6ee7b7" stop-opacity="0.95"/>
+                  <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.9"/>
+                </linearGradient>
+              </defs>
+              <rect width="100%" height="100%" rx="12" fill="url(#g1)" opacity="0.06"></rect>
+              <path d="M10 90 C 40 30, 80 30, 110 90 S 190 150, 210 90" stroke="#6ee7b7" stroke-width="4" fill="none" />
+              <circle cx="150" cy="40" r="8" fill="#60a5fa" />
+            </svg>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section container">
+      <h2>About Preceieve</h2>
+      <p>Preceieve empowers the deaf and hard-of-hearing community by converting sounds into instant tactile and visual signals — improving situational awareness and communication without relying on audio.</p>
+    </section>
+
+    <!-- FEATURES (ready-to-use buttons) -->
+    <section id="features" class="section container">
+      <h2>Features — Click to activate</h2>
+      <p class="muted">Each feature button below simulates the real behavior: click to activate and see visual/tactile feedback (UI-only simulation).</p>
+
+      <div class="features-grid" role="list">
+        <article class="feature-card" role="listitem">
+          <div class="f-icon" aria-hidden="true">🎙️</div>
+          <h3>Speech to Text</h3>
+          <p>Instantly transcribe spoken words into on-screen captions.</p>
+          <button id="micBtn" class="mic-btn" aria-pressed="false" aria-label="Start listening">
+  <span class="mic-ring" aria-hidden="true"></span>
+  <span class="mic-label">🎤 Start</span>
+</button>
+
+<div id="stt-output" class="stt-box" style="margin-top:15px; display:none;">
+  <h3>Live Transcription:</h3>
+  <p id="transcribedText"></p>
+
+  <h3>Translated Text:</h3>
+  <p id="translatedText"></p>
+</div>
+
+<label>Speech Language:</label>
+<select id="speechLang">
+  <!-- Indian Languages -->
+  <option value="en-US">English</option>
+  <option value="hi-IN">Hindi</option>
+  <option value="bn-IN">Bengali</option>
+  <option value="ta-IN">Tamil</option>
+  <option value="te-IN">Telugu</option>
+  <option value="mr-IN">Marathi</option>
+  <option value="pa-IN">Punjabi</option>
+  <option value="gu-IN">Gujarati</option>
+  <option value="ur-IN">Urdu</option>
+  <option value="kn-IN">Kannada</option>
+  <option value="ml-IN">Malayalam</option>
+
+  <!-- Foreign Languages -->
+  <option value="es-ES">Spanish</option>
+  <option value="fr-FR">French</option>
+  <option value="de-DE">German</option>
+  <option value="it-IT">Italian</option>
+  <option value="pt-PT">Portuguese</option>
+  <option value="ru-RU">Russian</option>
+  <option value="zh-CN">Chinese (Mandarin)</option>
+  <option value="ja-JP">Japanese</option>
+  <option value="ko-KR">Korean</option>
+  <option value="ar-SA">Arabic</option>
+</select>
+
+<label>Translate To:</label>
+<select id="targetLang">
+  <!-- Indian Languages -->
+  <option value="en">English</option>
+  <option value="hi">Hindi</option>
+  <option value="bn">Bengali</option>
+  <option value="ta">Tamil</option>
+  <option value="te">Telugu</option>
+  <option value="mr">Marathi</option>
+  <option value="pa">Punjabi</option>
+  <option value="gu">Gujarati</option>
+  <option value="ur">Urdu</option>
+  <option value="kn">Kannada</option>
+  <option value="ml">Malayalam</option>
+
+  <!-- Foreign Languages -->
+  <option value="es">Spanish</option>
+  <option value="fr">French</option>
+  <option value="de">German</option>
+  <option value="it">Italian</option>
+  <option value="pt">Portuguese</option>
+  <option value="ru">Russian</option>
+  <option value="zh-CN">Chinese (Simplified)</option>
+  <option value="ja">Japanese</option>
+  <option value="ko">Korean</option>
+  <option value="ar">Arabic</option>
+</select>
+
+
+
+        </article>
+
+        <article class="feature-card" role="listitem">
+          <div class="f-icon" aria-hidden="true">🚨</div>
+          <h3>Emergency Alert Mode</h3>
+          <p>Detects alarms and triggers distinctive vibration + visible banners.</p>
+          <button class="feature-btn" data-feature="Emergency Alert Mode" aria-pressed="false">Activate</button>
+        </article>
+
+<div id="emergency-popup" style="display:none; color:red; font-weight:bold;">
+  EMERGENCY!
+  <button onclick="document.getElementById('emergency-popup').style.display='none'">Cancel</button>
+</div>
+
+
+     <article class="feature-card" role="listitem">
+    <div class="f-icon" aria-hidden="true">🧭</div>
+    <h3>Direction Vibration</h3>
+    <p>Guides the user with directional vibration cues for navigation.</p>
+    
+    <div id="direction-vibration-controls">
+        
+        <label for="destination" style="display: block; margin-bottom: 5px;">Destination:</label>
+        <input type="text" id="destination" placeholder="Enter address or landmark" style="width: 100%; padding: 8px; box-sizing: border-box; margin-bottom: 10px;">
+        <button id="start-guidance-btn" onclick="startGuidance()" class="btn btn-primary" style="width: 100%;">
+            Start Guidance
+        </button>
+
+        <div id="map-container" style="height: 300px; width: 100%; margin: 15px 0; border-radius: 8px; background-color: #333; color: white; display: flex; align-items: center; justify-content: center;">
+            Map Loading Area
+        </div>
+        
+        <div id="guidance-status" style="margin-top: 10px; font-size: 0.9em;"></div>
+    </div>
+    </article>
+        <article class="feature-card" role="listitem">
+          <div class="f-icon" aria-hidden="true">🚧</div>
+          <h3>Obstacle Detection</h3>
+          <p>Warns about nearby obstacles using sensors and vibration patterns.</p>
+          <button class="feature-btn" data-feature="Obstacle Detection" aria-pressed="false">Activate</button>
+        </article>
+
+        <article class="feature-card" role="listitem">
+          <div class="f-icon" aria-hidden="true">🌦️</div>
+          <h3>Weather Detection</h3>
+          <p>Fetches weather updates and notifies important conditions via vibration.</p>
+          <button class="feature-btn" data-feature="Weather Detection" aria-pressed="false">Activate</button>
+        </article>
+
+        <article class="feature-card" role="listitem">
+          <div class="f-icon" aria-hidden="true">🤟</div>
+          <h3>Animated Sign Language</h3>
+          <p>Shows short sign animations to communicate common phrases visually.</p>
+          <button class="feature-btn" data-feature="Animated Sign Language" aria-pressed="false">Activate</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section container">
+      <h2>How it works</h2>
+      <ol class="how-grid" role="list">
+        <li class="how-step" role="listitem">
+          <div class="step-icon" aria-hidden="true">📱</div>
+          <h4>1. Open</h4>
+          <p>Select mode: Voice, Navigation or Emergency.</p>
+        </li>
+        <li class="how-step" role="listitem">
+          <div class="step-icon" aria-hidden="true">🎧</div>
+          <h4>2. Capture</h4>
+          <p>Mic captures voice, alarms, or environmental sounds.</p>
+        </li>
+        <li class="how-step" role="listitem">
+          <div class="step-icon" aria-hidden="true">🤖</div>
+          <h4>3. Process</h4>
+          <p>Speech recognition and detectors classify the sounds.</p>
+        </li>
+        <li class="how-step" role="listitem">
+          <div class="step-icon" aria-hidden="true">🔔</div>
+          <h4>4. Translate</h4>
+          <p>System converts to vibration patterns, captions and sign visuals.</p>
+        </li>
+        <li class="how-step" role="listitem">
+          <div class="step-icon" aria-hidden="true">✅</div>
+          <h4>5. Feedback</h4>
+          <p>User receives instant multimodal feedback.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- DEMO -->
+    <section id="demo" class="section container">
+      <h2>Demo</h2>
+      <div class="demo-grid">
+        <div class="demo-video">
+          <div class="video-placeholder" role="img" aria-label="Demo video placeholder">[Demo video placeholder]</div>
+        </div>
+
+        <aside class="demo-controls" aria-labelledby="demo-controls-label">
+          <h3 id="demo-controls-label">Simulate</h3>
+          <p class="muted">Click feature buttons above to simulate behavior. This demo is UI-only.</p>
+          
+
+  <div id="stt-output" class="stt-box" style="margin-top:15px; display:none;">
+    <h3>Live Transcription:</h3>
+    <p id="transcribedText"></p>
+
+    <h3>Translated Text:</h3>
+    <p id="translatedText"></p>
+</div>
+
+
+  <div class="stt-status">
+    <span id="stt-state">Idle</span>
+    <span id="stt-level" aria-hidden="true">• • •</span>
+  </div>
+</div>
+
+        </aside>
+      </div>
+    </section>
+
+    <!-- DASHBOARD PREVIEW -->
+    <section id="dashboard" class="section container">
+      <h2>Dashboard Preview</h2>
+      <div class="dashboard-preview">
+        <div class="dashboard-mockup" aria-hidden="true">
+          <div class="status-row">
+            <span class="status-dot on">●</span> Mic ON
+            <span class="status-dot">●</span> GPS OFF
+            <span class="status-dot alert">●</span> Emergency detection
+          </div>
+
+          <div class="dashboard-buttons">
+            <button class="big-btn">Voice Mode</button>
+            <button class="big-btn">Navigation</button>
+            <button class="big-btn">Emergency</button>
+            <button class="big-btn">Weather</button>
+            <button class="big-btn">Sign Mode</button>
+          </div>
+        </div>
+
+        <div class="dashboard-notes">
+          <p>Large action buttons and clear status indicators help users quickly act on important events.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNICAL OVERVIEW -->
+    <section id="tech" class="section container">
+      <h2>Technical Overview</h2>
+      <p>Frontend: React Native / Flutter — Backend: Python, Firebase — ML: TensorFlow Lite — APIs: Google Speech API, OpenWeather.</p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section container">
+      <h2>Contact</h2>
+      <form class="contact-form" action="#" method="post" novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required placeholder="Your name" />
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" />
+        </div>
+
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required placeholder="Tell us about your inquiry"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="checkbox-label">
+            <input type="checkbox" name="consent" required />
+            I consent to be contacted regarding this inquiry.
+          </label>
+        </div>
+
+        <div class="form-row">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="get" class="section container small">
+      <h2>Request Prototype</h2>
+      <p>Request access to the prototype build for testing and feedback.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contact">Request Access</a>
+        <a class="btn btn-outline" href="#tech">Learn More</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="socials">
+        <a href="#!" aria-label="Instagram">Instagram</a> ·
+        <a href="#!" aria-label="LinkedIn">LinkedIn</a> ·
+        <a href="#!" aria-label="GitHub">GitHub</a>
+      </div>
+      <div class="copyright">© <span id="year">2025</span> Preceieve — Designed for inclusivity.</div>
+    </div>
+  </footer>
+
+ <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+     
+<script src="app.js"></script>  
+<script type="module" src="index.js"></script> 
+
+</body>
+</html>
