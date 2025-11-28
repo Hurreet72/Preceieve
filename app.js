@@ -4,10 +4,10 @@ async function translateText(text) {
 
   if (!text.trim()) return;
 
-  // Convert speechLang (like "ko-KR") to just "ko"
+ 
   const sourceLang = speechLang.split("-")[0];
 
-  // If same source and target, skip
+ 
   if (sourceLang === targetLang) {
     document.getElementById("translatedText").innerText =
       "⚠ Please select different languages.";
@@ -38,7 +38,7 @@ async function translateText(text) {
   }
 }
 
-// ✅ --- MIC ANIMATION + BUTTON STATE ---
+
 const micBtn = document.getElementById("micBtn");
 const micLabel = micBtn?.querySelector(".mic-label");
 const sttState = document.getElementById("stt-state");
@@ -56,7 +56,7 @@ function setMicUI(active) {
   if (sttState) sttState.textContent = active ? "Listening" : "Idle";
 }
 
-// ✅ --- START SPEECH RECOGNITION ---
+
 function startRecognition() {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -90,7 +90,7 @@ function startRecognition() {
     document.getElementById("stt-output").style.display = "block";
     document.getElementById("transcribedText").innerText = transcript;
 
-    // ✅ Also translate
+   
     translateText(transcript);
   };
 
@@ -100,37 +100,37 @@ function startRecognition() {
   };
 
   recognition.onend = () => {
-    if (recognizing) recognition.start(); // Auto-restart
+    if (recognizing) recognition.start();
   };
 
   recognition.start();
 }
 
-// ✅ --- STOP SPEECH RECOGNITION ---
+
 function stopRecognition() {
   recognizing = false;
   setMicUI(false);
   if (recognition) recognition.stop();
 }
 
-// ✅ --- MIC BUTTON TOGGLE ---
+
 if (micBtn) {
   micBtn.addEventListener("click", () => {
     recognizing ? stopRecognition() : startRecognition();
   });
 }
 
-// --- Global variables for guidance logic ---
+
 let currentLat, currentLng, destinationLat, destinationLng;
 const statusDiv = document.getElementById("guidance-status");
 const startBtn = document.getElementById("start-guidance-btn");
 
-// --- Leaflet Map Variables ---
+
 let map;
 let currentMarker;
 let destinationMarker;
 
-// 🛑 FIX: Explicitly set the path for Leaflet marker images (Fixes missing markers)
+
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.9.4/dist/images/";
 
 /**
@@ -159,9 +159,9 @@ function startGuidance() {
           4
         )}`;
 
-        // 🛑 FIX: Use setTimeout to ensure Leaflet is fully loaded
+       
         setTimeout(() => {
-          // 1. Initialize and center the map on current location
+          // 1. Initialize 
           initMap(currentLat, currentLng);
 
           // 2. Proceed to find destination coordinates
@@ -176,8 +176,7 @@ function startGuidance() {
       }
     );
   } else {
-    // ... rest of startGuidance function ...
-    // ... rest of startGuidance function ...
+
     statusDiv.innerHTML =
       '<span style="color: red;">❌ Geolocation not supported.</span>';
     startBtn.disabled = false;
@@ -192,7 +191,7 @@ function initMap(lat, lng) {
   const mapContainer = document.getElementById("map-container");
 
   if (map) {
-    map.remove(); // Remove existing map if one exists
+    map.remove(); 
   }
 
   map = L.map("map-container").setView([lat, lng], 15);
@@ -281,7 +280,7 @@ function calculateAndDisplayRoute(lat1, lon1, lat2, lon2) {
       if (data.code === "Ok" && data.routes.length > 0) {
         const route = data.routes[0];
 
-        // Draw the route using a polyline
+        
         L.geoJSON(route.geometry).addTo(map);
 
         statusDiv.innerHTML = "Route found! Guidance is Active.";
@@ -322,7 +321,7 @@ function simulateGuidance() {
 
   statusDiv.innerHTML = `*DIRECTION:* ${direction}. Move now!`;
 
-  // --- ADDED VISUAL CUE ---
+
   const mapContainer = document.getElementById("map-container");
   if (mapContainer) {
     // Flash a border to show the vibration alert is happening

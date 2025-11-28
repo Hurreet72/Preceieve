@@ -1,7 +1,5 @@
-// index.js (module)
-// Handles: year, toast, theme, starter API (optional), visualAid module, emergencyAlert module, feature wiring
-
-// ---------------------- Utility & UI (toast + year) ----------------------
+// index.js 
+//Utility & UI (toast + year)
 document.getElementById('year').textContent = new Date().getFullYear();
 
 const toast = document.getElementById('toast');
@@ -10,17 +8,15 @@ function showToast(msg) {
   toast.textContent = msg;
   toast.hidden = false;
   toast.classList.remove('show');
-  // force reflow so animation restarts
   void toast.offsetWidth;
   toast.classList.add('show');
-  // auto-hide
   setTimeout(() => {
     toast.classList.remove('show');
     setTimeout(() => { toast.hidden = true; }, 300);
   }, 2200);
 }
 
-// ---------------------- Theme toggle ----------------------
+// Theme toggle
 const themeToggle = document.getElementById('theme-toggle');
 const root = document.documentElement;
 const stored = localStorage.getItem('preceieve-theme');
@@ -40,8 +36,8 @@ if (themeToggle) {
   });
 }
 
-// ---------------------- Starter server (optional) ----------------------
-const STARTER_BASE = 'http://127.0.0.1:5000'; // your Flask starter if you use it
+//Starter server
+const STARTER_BASE = 'http://127.0.0.1:5000';
 
 async function starterRequest(path, method = 'POST') {
   try {
@@ -63,7 +59,7 @@ async function starterRequest(path, method = 'POST') {
   }
 }
 
-// ---------------------- SCRIPT MAPPING ----------------------
+// SCRIPT MAPPING 
 const SCRIPT_MAPPING = {
   "Speech to Text": "app.js",
   // Mapped to local module now!
@@ -95,10 +91,10 @@ setInterval(checkEmergency, 500);
 
 
 
-// ---------------------- Visual Aid module (clean, self-contained) ----------------------
+// Visual Aid module (clean, self-contained)
 // Exposes global functions: openVisualAid(), closeVisualAid()
 (function visualAidModule() {
-  let handles = null;        // { root, video, overlay, messageBox, alertText, scanButton, closeButton, canvas }
+  let handles = null;        
   let mediaStream = null;
   let isOpen = false;
   let overlayClickHandler = null;
@@ -331,7 +327,7 @@ setInterval(checkEmergency, 500);
 })();
 
 
-// ---------------------- Emergency Alert module (LLM & TTS) ----------------------
+// Emergency Alert module (LLM & TTS)
 // Exposes global functions: openEmergencyAlert(), closeEmergencyAlert()
 (function emergencyAlertModule() {
   let handles = {};
@@ -444,7 +440,7 @@ setInterval(checkEmergency, 500);
     }
   }
 
-  // --- UI Creation and Management ---
+  //  UI Creation and Management 
 
   function createUI() {
     if (handles.root) return handles;
@@ -703,7 +699,7 @@ setInterval(checkEmergency, 500);
 })();
 
 
-// ---------------------- Feature wiring ----------------------
+// Feature wiring -
 document.addEventListener('DOMContentLoaded', () => {
   // Add Tailwind and Inter font link here if not in main HTML (Optional: ensure they are loaded)
   

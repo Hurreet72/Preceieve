@@ -11,7 +11,7 @@ from pydub import AudioSegment
 import openai
 from dotenv import load_dotenv
 
-# --- Initialization & Setup ---
+# Initialization & Setup
 load_dotenv()  # Load OPENAI_API_KEY etc.
 
 app = Flask(__name__)
@@ -20,13 +20,13 @@ CORS(app)
 LOG_DIR = os.path.join(os.getcwd(), 'logs')
 os.makedirs(LOG_DIR, exist_ok=True)
 
-running_procs = {}  # Store subprocess objects
+running_procs = {}  
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 if not openai.api_key:
     print("[SERVER WARNING] OPENAI_API_KEY is not set. Transcription endpoint may fail.")
 
-# --- Utility Functions ---
+# Utility Functions
 
 def find_interpreter():
     """Find Python interpreter (prefer virtualenv)."""
@@ -63,7 +63,7 @@ def convert_to_wav(input_path, output_path):
     audio.export(output_path, format="wav")
 
 
-# --- Routes: Script Runner ---
+# Routes: Script Runner 
 
 @app.route('/start-script/<script_name>', methods=['POST'])
 def start_script_route(script_name):
@@ -160,7 +160,7 @@ def get_script_status(script_name):
         return jsonify(status="SYSTEM_FAILURE", top1_name="Server Error", top1_score=0.0)
 
 
-# --- Routes: Audio Transcription ---
+
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe_audio():
@@ -199,7 +199,7 @@ def transcribe_audio():
                 os.remove(path)
 
 
-# --- Main Execution ---
+
 
 if __name__ == '__main__':
     atexit.register(lambda: [proc.terminate() for proc in running_procs.values() if proc.poll() is None])

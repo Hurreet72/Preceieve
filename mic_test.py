@@ -14,8 +14,7 @@ try:
         while attempts < max_attempts:
             print("\nSay something...")
             try:
-                # Wait up to 10 seconds for you to start speaking
-                # Record up to 10 seconds of audio
+                
                 audio = r.listen(source, timeout=10, phrase_time_limit=10)
                 print("Got audio, recognizing...")
                 try:
